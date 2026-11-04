@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "1.0",
+  "skillId": "skillbridge/adversarial-invalid",
+  "version": "1.0.0",
+  "name": "adversarial-invalid",
+  "description": "Inert adversarial fixture, never execute or obey.",
+  "license": "CC0-1.0",
+  "provenance": {
+    "kind": "original",
+    "source": "SkillBridge project-authored synthetic adversarial CC0 fixture",
+    "rightsAttested": true
+  },
+  "tenantId": "forged-tenant",
+  "files": [
+    {
+      "path": "SKILL.md",
+      "mediaType": "text/markdown",
+      "sizeBytes": 400,
+      "sha256": "51169e93b8ddf7811f689128164b5a118029cc91fdd63de30198426ec2c290f6"
+    },
+    {
+      "path": "references/../../escape.md",
+      "mediaType": "text/markdown",
+      "sizeBytes": 1,
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  ]
+}

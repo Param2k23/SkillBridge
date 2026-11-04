@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "1.0",
+  "skillId": "skillbridge/with-references",
+  "version": "1.0.0",
+  "name": "with-references",
+  "description": "Review a supplied change using the provided checklist.",
+  "license": "CC0-1.0",
+  "provenance": {
+    "kind": "original",
+    "source": "SkillBridge project-authored CC0 conformance fixture",
+    "rightsAttested": true
+  },
+  "files": [
+    {
+      "path": "SKILL.md",
+      "mediaType": "text/markdown",
+      "sizeBytes": 178,
+      "sha256": "64afe5ff0fff249403b40b84a0aeec94333f24748c61eff30f3c5d657ed48379"
+    },
+    {
+      "path": "references/checklist.md",
+      "mediaType": "text/markdown",
+      "sizeBytes": 92,
+      "sha256": "8f13923d3b7117cec6049f5278b43ff548368e0fe96f1a13dc128120448815e9"
+    }
+  ]
+}

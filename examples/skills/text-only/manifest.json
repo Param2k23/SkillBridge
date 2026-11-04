@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "1.0",
+  "skillId": "skillbridge/text-only",
+  "version": "1.0.0",
+  "name": "text-only",
+  "description": "Summarize a supplied paragraph using three concise bullets.",
+  "license": "CC0-1.0",
+  "provenance": {
+    "kind": "original",
+    "source": "SkillBridge project-authored CC0 conformance fixture",
+    "rightsAttested": true
+  },
+  "files": [
+    {
+      "path": "SKILL.md",
+      "mediaType": "text/markdown",
+      "sizeBytes": 186,
+      "sha256": "e6c5420c7efee92b7bd017a4c46650f5ec60f5fc73393710aafcbdce30c839af"
+    }
+  ]
+}
