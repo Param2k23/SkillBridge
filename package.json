@@ -1,0 +1,26 @@
+{
+  "name": "skillbridge",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.34.9",
+  "engines": {
+    "node": "24.21.0",
+    "pnpm": "10.34.9"
+  },
+  "scripts": {
+    "lint": "eslint . && prettier --check package.json pnpm-workspace.yaml tsconfig.json tsconfig.base.json vitest.config.ts eslint.config.js packages",
+    "format": "prettier --write package.json pnpm-workspace.yaml tsconfig.json tsconfig.base.json vitest.config.ts eslint.config.js packages",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run",
+    "build": "tsc -p packages/registry/tsconfig.build.json"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.2",
+    "eslint": "10.14.0",
+    "prettier": "3.9.10",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.72.1",
+    "vitest": "5.1.0"
+  }
+}
