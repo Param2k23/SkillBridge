@@ -1,0 +1,27 @@
+[
+  {
+    "command": "corepack pnpm install --frozen-lockfile --offline",
+    "exit_code": 0,
+    "log": "project/evidence/phase-1/p1-01-coordinator/install.log"
+  },
+  {
+    "command": "corepack pnpm lint",
+    "exit_code": 0,
+    "log": "project/evidence/phase-1/p1-01-coordinator/lint.log"
+  },
+  {
+    "command": "corepack pnpm typecheck",
+    "exit_code": 0,
+    "log": "project/evidence/phase-1/p1-01-coordinator/typecheck.log"
+  },
+  {
+    "command": "corepack pnpm test",
+    "exit_code": 0,
+    "log": "project/evidence/phase-1/p1-01-coordinator/test.log"
+  },
+  {
+    "command": "corepack pnpm build",
+    "exit_code": 0,
+    "log": "project/evidence/phase-1/p1-01-coordinator/build.log"
+  }
+]

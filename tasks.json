@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "project": "SkillBridge",
-  "status_note": "Phase 0 DONE: independent QA PASS and local clean-snapshot validation. P1-01/P1-02 READY; other P1 tasks dependency-gated. No product package/hosted CI claims.",
+  "status_note": "P1-01/P1-02 DONE after independent review and combined local integration checks; dependency recomputation unblocked only P1-03/04/05. No hosted CI or Docker smoke yet.",
   "tasks": [
     {
       "id": "P0-01",
@@ -128,9 +128,11 @@
         ".node-version",
         ".gitignore"
       ],
-      "status": "READY",
+      "status": "DONE",
       "evidence": [
-        "project/phase-1-wave.md"
+        "project/evidence/phase-1/p1-01-review.md",
+        "project/evidence/phase-1/p1-01-coordinator/summary.json",
+        "project/evidence/phase-1/integration-bootstrap/summary.json"
       ],
       "risk_level": "medium"
     },
@@ -153,9 +155,11 @@
         ".github/pull_request_template.md",
         "CONTRIBUTING.md"
       ],
-      "status": "READY",
+      "status": "DONE",
       "evidence": [
-        "project/phase-1-wave.md"
+        "project/evidence/phase-1/p1-02-review.md",
+        "project/evidence/phase-1/p1-02-integration.log",
+        "project/evidence/phase-1/integration-bootstrap/summary.json"
       ],
       "risk_level": "medium"
     },
@@ -171,8 +175,11 @@
       "owned_paths": [
         ".github/workflows/"
       ],
-      "status": "BACKLOG",
-      "evidence": []
+      "status": "READY",
+      "evidence": [
+        "project/evidence/phase-1/graph-after-bootstrap.log"
+      ],
+      "risk_level": "medium"
     },
     {
       "id": "P1-04",
@@ -187,8 +194,11 @@
         "examples/skills/",
         "tests/contract/"
       ],
-      "status": "BACKLOG",
-      "evidence": []
+      "status": "READY",
+      "evidence": [
+        "project/evidence/phase-1/graph-after-bootstrap.log"
+      ],
+      "risk_level": "medium"
     },
     {
       "id": "P1-05",
@@ -203,8 +213,11 @@
         "deploy/",
         "docs/runbooks/"
       ],
-      "status": "BACKLOG",
-      "evidence": []
+      "status": "READY",
+      "evidence": [
+        "project/evidence/phase-1/graph-after-bootstrap.log"
+      ],
+      "risk_level": "medium"
     },
     {
       "id": "P1-06",

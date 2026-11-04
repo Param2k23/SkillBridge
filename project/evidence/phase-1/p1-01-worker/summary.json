@@ -1,0 +1,27 @@
+[
+  {
+    "command": "corepack pnpm install --frozen-lockfile",
+    "exit_code": 0,
+    "log": "/tmp/skillbridge-p1-01-logs/install.log"
+  },
+  {
+    "command": "corepack pnpm lint",
+    "exit_code": 0,
+    "log": "/tmp/skillbridge-p1-01-logs/lint.log"
+  },
+  {
+    "command": "corepack pnpm typecheck",
+    "exit_code": 0,
+    "log": "/tmp/skillbridge-p1-01-logs/typecheck.log"
+  },
+  {
+    "command": "corepack pnpm test",
+    "exit_code": 0,
+    "log": "/tmp/skillbridge-p1-01-logs/test.log"
+  },
+  {
+    "command": "corepack pnpm build",
+    "exit_code": 0,
+    "log": "/tmp/skillbridge-p1-01-logs/build.log"
+  }
+]

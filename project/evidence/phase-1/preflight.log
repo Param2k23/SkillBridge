@@ -1,0 +1,41 @@
+$ git rev-parse HEAD
+0ea0b4d6eec4e9dedde69c05df1a912d62a47694
+
+exit=0
+$ git status --short
+ M project/status.md
+ M tasks.json
+?? project/evidence/phase-1/
+
+exit=0
+$ git remote -v
+
+exit=0
+$ python3 scripts/validate_phase0.py
+Validated 57 recorded positive/negative schema cases
+test_meta_schema (__main__.Phase0Contracts.test_meta_schema) ... ok
+test_original_samples_and_integrity (__main__.Phase0Contracts.test_original_samples_and_integrity) ... ok
+test_recorded_contract_cases (__main__.Phase0Contracts.test_recorded_contract_cases) ... ok
+test_semantic_rejections (__main__.Phase0Contracts.test_semantic_rejections) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.739s
+
+OK
+
+exit=0
+$ python3 scripts/validate_task_graph.py
+PASS: 48 tasks; unique IDs; valid dependencies; DAG is acyclic
+
+exit=0
+$ docker compose version
+
+The command 'docker' could not be found in this WSL 2 distro.
+We recommend to activate the WSL integration in Docker Desktop settings.
+
+For details about using Docker Desktop with WSL 2, visit:
+
+https://docs.docker.com/go/wsl2/
+
+
+exit=1

@@ -1,0 +1,7 @@
+$ corepack pnpm typecheck
+
+> skillbridge@0.0.0 typecheck /home/param/skillbridge
+> tsc --noEmit -p tsconfig.json
+
+
+exit=0

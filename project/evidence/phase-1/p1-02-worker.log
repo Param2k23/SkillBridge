@@ -1,0 +1,48 @@
+$ python3 scripts/validate_task_graph.py
+PASS: 48 tasks; unique IDs; valid dependencies; DAG is acyclic; states and DONE evidence valid
+Eligible BACKLOG tasks (coordinator approval required): none
+
+exit=0
+$ python3 -m unittest discover -s scripts -p test_validate_task_graph.py -v
+test_blocked_task_can_have_incomplete_dependency (test_validate_task_graph.TaskGraphTests.test_blocked_task_can_have_incomplete_dependency) ... ok
+test_boolean_phase_rejected (test_validate_task_graph.TaskGraphTests.test_boolean_phase_rejected) ... ok
+test_cli_duplicate_json_keys (test_validate_task_graph.TaskGraphTests.test_cli_duplicate_json_keys) ... ok
+test_cli_missing_file (test_validate_task_graph.TaskGraphTests.test_cli_missing_file) ... ok
+test_cli_path_and_exit_codes (test_validate_task_graph.TaskGraphTests.test_cli_path_and_exit_codes) ... ok
+test_dependency_gated_states (test_validate_task_graph.TaskGraphTests.test_dependency_gated_states) ... ok
+test_document_shape_and_field_types (test_validate_task_graph.TaskGraphTests.test_document_shape_and_field_types) ... ok
+test_done_evidence_directory (test_validate_task_graph.TaskGraphTests.test_done_evidence_directory) ... ok
+test_done_evidence_missing (test_validate_task_graph.TaskGraphTests.test_done_evidence_missing) ... ok
+test_done_requires_evidence (test_validate_task_graph.TaskGraphTests.test_done_requires_evidence) ... ok
+test_duplicate_dependencies (test_validate_task_graph.TaskGraphTests.test_duplicate_dependencies) ... ok
+test_duplicate_id (test_validate_task_graph.TaskGraphTests.test_duplicate_id) ... ok
+test_empty_ownership (test_validate_task_graph.TaskGraphTests.test_empty_ownership) ... ok
+test_evidence_symlink_file_and_parent (test_validate_task_graph.TaskGraphTests.test_evidence_symlink_file_and_parent) ... ok
+test_evidence_traversal (test_validate_task_graph.TaskGraphTests.test_evidence_traversal) ... ok
+test_import_has_no_cli_side_effect (test_validate_task_graph.TaskGraphTests.test_import_has_no_cli_side_effect) ... ok
+test_later_phase_dependency (test_validate_task_graph.TaskGraphTests.test_later_phase_dependency) ... ok
+test_missing_dependency (test_validate_task_graph.TaskGraphTests.test_missing_dependency) ... ok
+test_multi_node_cycle (test_validate_task_graph.TaskGraphTests.test_multi_node_cycle) ... ok
+test_phase_id_mismatch (test_validate_task_graph.TaskGraphTests.test_phase_id_mismatch) ... ok
+test_required_fields (test_validate_task_graph.TaskGraphTests.test_required_fields) ... ok
+test_self_cycle (test_validate_task_graph.TaskGraphTests.test_self_cycle) ... ok
+test_shared_dependency_is_not_cycle (test_validate_task_graph.TaskGraphTests.test_shared_dependency_is_not_cycle) ... ok
+test_unknown_owner (test_validate_task_graph.TaskGraphTests.test_unknown_owner) ... ok
+test_unknown_risk_level (test_validate_task_graph.TaskGraphTests.test_unknown_risk_level) ... ok
+test_unknown_state (test_validate_task_graph.TaskGraphTests.test_unknown_state) ... ok
+test_unsafe_ownership (test_validate_task_graph.TaskGraphTests.test_unsafe_ownership) ... ok
+test_valid_current_repository (test_validate_task_graph.TaskGraphTests.test_valid_current_repository) ... ok
+test_valid_graph_and_ready_candidates (test_validate_task_graph.TaskGraphTests.test_valid_graph_and_ready_candidates) ... ok
+
+----------------------------------------------------------------------
+Ran 29 tests in 0.258s
+
+OK
+
+exit=0
+$ git diff --check
+
+exit=0
+$ git show --check --oneline HEAD
+b1fb95b chore: add reviewed task workflow harness and DAG validation
+exit=0

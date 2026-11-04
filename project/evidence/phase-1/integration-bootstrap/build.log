@@ -1,0 +1,7 @@
+$ corepack pnpm build
+
+> skillbridge@0.0.0 build /home/param/skillbridge
+> tsc -p packages/registry/tsconfig.build.json
+
+
+exit=0

@@ -1,0 +1,16 @@
+$ corepack pnpm test
+
+> skillbridge@0.0.0 test /home/param/skillbridge
+> vitest run
+
+
+ RUN  v5.1.0 /home/param/skillbridge
+
+
+ Test Files  1 passed (1)
+      Tests  60 passed (60)
+   Start at  07:47:05
+   Duration  801ms (import 74%, transform 14%, tests 11%, worker 1%)
+
+
+exit=0

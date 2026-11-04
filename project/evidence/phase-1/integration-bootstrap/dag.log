@@ -1,0 +1,5 @@
+$ python3 scripts/validate_task_graph.py
+PASS: 48 tasks; unique IDs; valid dependencies; DAG is acyclic; states and DONE evidence valid
+Eligible BACKLOG tasks (coordinator approval required): none
+
+exit=0

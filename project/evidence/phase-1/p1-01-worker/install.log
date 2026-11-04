@@ -1,0 +1,8 @@
+$ COREPACK_HOME=/tmp/skillbridge-corepack corepack pnpm install --frozen-lockfile
+Scope: all 2 workspace projects
+Lockfile is up to date, resolution step is skipped
+Already up to date
+
+Done in 1s using pnpm v10.34.9
+
+exit=0

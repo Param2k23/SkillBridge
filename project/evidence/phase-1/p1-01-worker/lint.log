@@ -1,0 +1,9 @@
+$ COREPACK_HOME=/tmp/skillbridge-corepack corepack pnpm lint
+
+> skillbridge@0.0.0 lint /tmp/skillbridge-p1-01
+> eslint . && prettier --check package.json pnpm-workspace.yaml tsconfig.json tsconfig.base.json vitest.config.ts eslint.config.js packages
+
+Checking formatting...
+All matched files use Prettier code style!
+
+exit=0

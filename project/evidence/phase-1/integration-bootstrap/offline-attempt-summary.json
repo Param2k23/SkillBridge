@@ -1,0 +1,7 @@
+[
+  {
+    "command": "corepack pnpm install --frozen-lockfile --offline",
+    "exit_code": 1,
+    "log": "install.log"
+  }
+]

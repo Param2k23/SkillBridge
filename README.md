@@ -1,40 +1,37 @@
-# SkillBridge multi-agent development starter pack
+# SkillBridge
 
-This is a **planning and orchestration seed**, not an implementation of SkillBridge. It is designed to be copied into a newly created Git repository and used with Codex's built-in agent orchestration. No AWS or GitHub resources have been created.
+SkillBridge is a headless, multi-tenant skill distribution service being built for
+existing AI agents over MCP. The current repository contains reviewed domain
+contracts and the engineering foundation. It does not yet provide a running MCP
+service, hosted deployment, or verified client integration.
 
-## Contents
-- `ROADMAP.md` — full multi-phase implementation plan, quality gates, architecture, task state, parallel waves.
-- `AGENTS.md` — durable constraints Codex reads in the repo.
-- `tasks.json` — machine-readable dependency DAG and acceptance checks.
-- `.codex/config.toml` — conservative subagent concurrency config (3).
-- `.codex/agents/` — project-scoped role definitions.
-- `KICKOFF_PROMPT.md` — copy into Codex at repo root to initiate Phase 0.
-- `PHASE_TASK_PROMPT_TEMPLATE.md` — bounded worker/reviewer tasks.
-- `scripts/validate_task_graph.py` — checks dependency references and cycles.
+Read [AGENTS.md](AGENTS.md), [the roadmap](ROADMAP.md), [tasks.json](tasks.json)
+and [current status](project/status.md) before contributing. Task IDs and
+prerequisites in `tasks.json` are authoritative.
 
-## Suggested start (Windows with WSL Ubuntu or local Linux)
+The foundation uses Node **24.21.0** and pnpm **10.34.9**, pinned in repository
+configuration. With the installed Corepack launcher, use `corepack pnpm` in place
+of `pnpm`; enabling global shims is unnecessary:
 
 ```bash
-mkdir -p ~/skillbridge && cd ~/skillbridge
-git init
-# Copy pack contents, including hidden .codex/ directory, into ~/skillbridge
+corepack pnpm install --frozen-lockfile
+corepack pnpm lint
+corepack pnpm typecheck
+corepack pnpm test
+corepack pnpm build
 python3 scripts/validate_task_graph.py
-# Ensure Git identity is set on your machine
-git add .
-git commit -m "chore: seed SkillBridge agent execution plan"
-codex login
-codex
+python3 -m unittest discover -s scripts -p test_validate_task_graph.py -v
 ```
 
-Paste `KICKOFF_PROMPT.md` into the Codex chat. Use `/subagents` to inspect actual delegated threads. For coding tasks that write files in parallel, create separate branches/worktrees, or use distinct Codex Worktree chats. Do not conflate subagents with Git worktree isolation.
+The standalone Phase 0 Python checks require
+[scripts/requirements-phase0.txt](scripts/requirements-phase0.txt). The product
+TypeScript tests exercise the same approved JSON Schema cases with the actual
+runtime validator. Schema validation does not implement tenant authorization,
+content scanning, or the additional semantic ingestion rules.
 
-## Live docs to confirm before coding
-- https://learn.chatgpt.com/docs/agent-configuration/subagents
-- https://learn.chatgpt.com/docs/environments/git-worktrees
-- https://learn.chatgpt.com/docs/codex/cli
-- https://modelcontextprotocol.io/specification
-- https://skills.extensions.modelcontextprotocol.io/
-- https://agentskills.io/
-- https://openai.com/index/open-source-codex-orchestration-symphony/
-
-**Usage:** ChatGPT Plus supports Codex tasks within plan allowance. Multiple subagents use more allowance. OpenAI API/Agents API is billed separately. AWS credits eligibility and costs must be verified before deployment.
+See [contribution instructions](CONTRIBUTING.md),
+[architecture](docs/architecture.md), [accepted ADRs](docs/adr/), and
+[engineering workflow](docs/runbooks/engineering-workflow.md). Local checks,
+hosted CI, and real-client compatibility have separate evidence requirements.
+Cloud spending/deployment, credentials, public publishing, protected branch
+merges and releases require explicit human approval.
