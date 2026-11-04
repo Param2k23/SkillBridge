@@ -34,9 +34,10 @@ dependency pins and the frozen-lockfile requirement. No approved domain schema,
 protocol profile or tenant-security policy changes as part of this repair.
 
 R1 validation observed on the repaired lockfile: all three consumers resolve
-`minimatch 11.0.1`, expose the `Minimatch` constructor used by their installed
-code, and pass a constructor/match positive-negative smoke. `pnpm why minimatch`
-contains no other version. Frozen install, actual ESLint/Prettier, typecheck,
+`minimatch 11.0.1`. ESLint and `@eslint/config-array` use `Minimatch.match`;
+`@typescript-eslint/typescript-estree` uses `minimatch()`. Positive/negative
+smoke checks passed for both actual API paths. `pnpm why minimatch` contains
+no other version. Frozen install, actual ESLint/Prettier, typecheck,
 92 tests and emitted build passed. The real network audit exited 0 with zero
 advisories and an empty muted list, using the unchanged `--audit-level=low`.
 These are local results; independent review and integration remain separate
