@@ -1,0 +1,780 @@
+{
+  "schema_version": "1.0",
+  "project": "SkillBridge",
+  "status_note": "Seed task graph. Coordinator must set states only with evidence. Phase 0 first.",
+  "tasks": [
+    {
+      "id": "P0-01",
+      "phase": 0,
+      "owner": "research_agent",
+      "depends_on": [],
+      "title": "Verify MCP transport, Skills extension, prompts/tools/resources against current official specifications",
+      "acceptance": "Reference notes and version matrix",
+      "owned_paths": [
+        "docs/research/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P0-02",
+      "phase": 0,
+      "owner": "security_engineer",
+      "depends_on": [],
+      "title": "Draft tenant and skill supply-chain threat model",
+      "acceptance": "Abuse cases, risks and controls documented",
+      "owned_paths": [
+        "docs/security/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P0-03",
+      "phase": 0,
+      "owner": "registry_engineer",
+      "depends_on": [],
+      "title": "Propose canonical skill identities and versioned manifest schemas",
+      "acceptance": "Schema covers files, aliases, grants and checksums",
+      "owned_paths": [
+        "docs/protocol/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P0-04",
+      "phase": 0,
+      "owner": "integration_engineer",
+      "depends_on": [
+        "P0-01"
+      ],
+      "title": "Draft evidence-based Claude/Codex/Cursor capabilities matrix",
+      "acceptance": "Verified vs unverified vs unsupported separated",
+      "owned_paths": [
+        "docs/protocol/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P0-05",
+      "phase": 0,
+      "owner": "coordinator",
+      "depends_on": [
+        "P0-01",
+        "P0-02",
+        "P0-03",
+        "P0-04"
+      ],
+      "title": "Approve and freeze architecture decisions and core interfaces",
+      "acceptance": "ADR set and contracts reviewed",
+      "owned_paths": [
+        "docs/adr/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P1-01",
+      "phase": 1,
+      "owner": "platform_engineer",
+      "depends_on": [
+        "P0-05"
+      ],
+      "title": "Bootstrap pnpm TypeScript monorepo with deterministic scripts",
+      "acceptance": "Fresh install lint typecheck test build pass",
+      "owned_paths": [
+        "apps/",
+        "packages/",
+        "package.json",
+        "pnpm-lock.yaml"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P1-02",
+      "phase": 1,
+      "owner": "coordinator",
+      "depends_on": [
+        "P0-05"
+      ],
+      "title": "Integrate DAG, AGENTS.md, issue/PR templates and runbooks",
+      "acceptance": "Task graph validation and team practices documented",
+      "owned_paths": [
+        "AGENTS.md",
+        "project/",
+        "docs/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P1-03",
+      "phase": 1,
+      "owner": "platform_engineer",
+      "depends_on": [
+        "P1-01"
+      ],
+      "title": "Configure CI, reproducible build, secret and dependency scanning",
+      "acceptance": "CI green in clean checkout",
+      "owned_paths": [
+        ".github/workflows/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P1-04",
+      "phase": 1,
+      "owner": "qa_reviewer",
+      "depends_on": [
+        "P1-01"
+      ],
+      "title": "Create conformance fixtures and negative tests",
+      "acceptance": "3 legitimate/invalid sample skills exercised by tests",
+      "owned_paths": [
+        "examples/skills/",
+        "tests/contract/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P1-05",
+      "phase": 1,
+      "owner": "platform_engineer",
+      "depends_on": [
+        "P1-01"
+      ],
+      "title": "Docker Compose development dependencies and WSL instructions",
+      "acceptance": "Fresh local startup passes smoke checks",
+      "owned_paths": [
+        "deploy/",
+        "docs/runbooks/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P1-06",
+      "phase": 1,
+      "owner": "coordinator",
+      "depends_on": [
+        "P1-02",
+        "P1-03",
+        "P1-04",
+        "P1-05"
+      ],
+      "title": "Confirm Phase 1 exit gate",
+      "acceptance": "Evidence attached and clean CI observed",
+      "owned_paths": [
+        "project/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P2-01",
+      "phase": 2,
+      "owner": "protocol_engineer",
+      "depends_on": [
+        "P1-06"
+      ],
+      "title": "Build stateless Streamable HTTP MCP server",
+      "acceptance": "Initialize and two concurrent requests pass integration tests",
+      "owned_paths": [
+        "apps/mcp-server/",
+        "packages/protocol/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P2-02",
+      "phase": 2,
+      "owner": "protocol_engineer",
+      "depends_on": [
+        "P2-01"
+      ],
+      "title": "Implement native Skills extension and resource retrieval",
+      "acceptance": "Supported SDK methods verified; manifest and file reads tested",
+      "owned_paths": [
+        "packages/protocol/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P2-03",
+      "phase": 2,
+      "owner": "protocol_engineer",
+      "depends_on": [
+        "P2-01",
+        "P0-03"
+      ],
+      "title": "Expose tools: search, get, read file, list my skills",
+      "acceptance": "MCP tools contract and negative tests pass",
+      "owned_paths": [
+        "apps/mcp-server/",
+        "packages/protocol/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P2-04",
+      "phase": 2,
+      "owner": "protocol_engineer",
+      "depends_on": [
+        "P2-01"
+      ],
+      "title": "Expose MCP prompts for supported client commands",
+      "acceptance": "Prompts discovery and content retrieval tests pass",
+      "owned_paths": [
+        "apps/mcp-server/",
+        "packages/protocol/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P2-05",
+      "phase": 2,
+      "owner": "qa_reviewer",
+      "depends_on": [
+        "P2-02",
+        "P2-03",
+        "P2-04"
+      ],
+      "title": "Independent real MCP compatibility test and protocol review",
+      "acceptance": "Retrieve skill without local per-skill installation; evidence recorded",
+      "owned_paths": [
+        "tests/contract/",
+        "tests/e2e/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P2-06",
+      "phase": 2,
+      "owner": "coordinator",
+      "depends_on": [
+        "P2-05"
+      ],
+      "title": "Approve Phase 2 vertical slice",
+      "acceptance": "Trace and unsupported client caveats documented",
+      "owned_paths": [
+        "project/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P3-01",
+      "phase": 3,
+      "owner": "registry_engineer",
+      "depends_on": [
+        "P1-06",
+        "P0-03"
+      ],
+      "title": "Create relational schema and tenant-scoped migrations",
+      "acceptance": "Migrations, constraints and rollback tests pass",
+      "owned_paths": [
+        "packages/db/",
+        "packages/registry/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P3-02",
+      "phase": 3,
+      "owner": "registry_engineer",
+      "depends_on": [
+        "P1-06",
+        "P0-03"
+      ],
+      "title": "Content-addressed storage adapter and file manifest validation",
+      "acceptance": "Hash, traversal and corrupted-content tests pass",
+      "owned_paths": [
+        "packages/storage/",
+        "packages/registry/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P3-03",
+      "phase": 3,
+      "owner": "registry_engineer",
+      "depends_on": [
+        "P3-01",
+        "P3-02"
+      ],
+      "title": "Publish worker pipeline with quarantine, retries and atomic publication",
+      "acceptance": "Idempotency, DLQ, partial upload tests pass",
+      "owned_paths": [
+        "apps/worker/",
+        "packages/registry/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P3-04",
+      "phase": 3,
+      "owner": "registry_engineer",
+      "depends_on": [
+        "P3-01",
+        "P3-02"
+      ],
+      "title": "Version pinning, stable alias, deprecation and rollback",
+      "acceptance": "Concurrent alias tests and audit events pass",
+      "owned_paths": [
+        "packages/registry/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P3-05",
+      "phase": 3,
+      "owner": "integration_engineer",
+      "depends_on": [
+        "P3-03",
+        "P3-04"
+      ],
+      "title": "Publisher CLI validate/package/publish/list versions",
+      "acceptance": "CLI e2e and documented non-goals pass",
+      "owned_paths": [
+        "apps/cli/",
+        "integrations/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P3-06",
+      "phase": 3,
+      "owner": "qa_reviewer",
+      "depends_on": [
+        "P3-03",
+        "P3-04",
+        "P3-05"
+      ],
+      "title": "Registry disaster and integrity review",
+      "acceptance": "Restart, digest mismatch, duplicate and retry tests observed",
+      "owned_paths": [
+        "tests/integration/",
+        "tests/security/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P3-07",
+      "phase": 3,
+      "owner": "coordinator",
+      "depends_on": [
+        "P2-06",
+        "P3-06"
+      ],
+      "title": "Integrate durable registry with MCP endpoint",
+      "acceptance": "E2E publish to retrieval works across restart",
+      "owned_paths": [
+        "project/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P4-01",
+      "phase": 4,
+      "owner": "security_engineer",
+      "depends_on": [
+        "P3-07"
+      ],
+      "title": "OAuth/OIDC protected MCP resource and token validation",
+      "acceptance": "Wrong issuer/audience/expiry/scope fail closed",
+      "owned_paths": [
+        "packages/auth/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P4-02",
+      "phase": 4,
+      "owner": "security_engineer",
+      "depends_on": [
+        "P3-07"
+      ],
+      "title": "Tenant ACL and public/unlisted/org/private policy",
+      "acceptance": "Cross-tenant list/get/file/search tests fail closed",
+      "owned_paths": [
+        "packages/security/",
+        "packages/auth/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P4-03",
+      "phase": 4,
+      "owner": "security_engineer",
+      "depends_on": [
+        "P3-03"
+      ],
+      "title": "Harden ingestion scanner and dangerous-file handling",
+      "acceptance": "Path traversal, symlink, secret, oversized archive tests pass",
+      "owned_paths": [
+        "packages/security/",
+        "tests/security/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P4-04",
+      "phase": 4,
+      "owner": "protocol_engineer",
+      "depends_on": [
+        "P4-01",
+        "P4-02"
+      ],
+      "title": "Enforce auth/ACL at every MCP read surface and cache path",
+      "acceptance": "Unauthorized tool/prompt/resource/skill paths denied",
+      "owned_paths": [
+        "packages/protocol/",
+        "apps/mcp-server/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P4-05",
+      "phase": 4,
+      "owner": "qa_reviewer",
+      "depends_on": [
+        "P4-03",
+        "P4-04"
+      ],
+      "title": "Adversarial security regression and threat model review",
+      "acceptance": "Security report with zero known critical blockers",
+      "owned_paths": [
+        "tests/security/",
+        "docs/security/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P4-06",
+      "phase": 4,
+      "owner": "coordinator",
+      "depends_on": [
+        "P4-05"
+      ],
+      "title": "Approve tenant isolation release gate",
+      "acceptance": "Independent security evidence recorded",
+      "owned_paths": [
+        "project/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P5-01",
+      "phase": 5,
+      "owner": "registry_engineer",
+      "depends_on": [
+        "P3-07",
+        "P4-06"
+      ],
+      "title": "Exact ID, alias lookup and PostgreSQL full text indexing",
+      "acceptance": "Deterministic exact resolution and authorized filtering",
+      "owned_paths": [
+        "packages/search/",
+        "packages/db/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P5-02",
+      "phase": 5,
+      "owner": "integration_engineer",
+      "depends_on": [
+        "P5-01"
+      ],
+      "title": "Pagination, metadata and compatibility filtering",
+      "acceptance": "Pagination contract and deterministic rank tests pass",
+      "owned_paths": [
+        "packages/search/",
+        "integrations/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P5-03",
+      "phase": 5,
+      "owner": "qa_reviewer",
+      "depends_on": [
+        "P5-02"
+      ],
+      "title": "Labeled search evaluation benchmark",
+      "acceptance": "Recall@5 MRR latency and unauthorized-result metrics recorded",
+      "owned_paths": [
+        "tests/search/",
+        "docs/research/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P5-04",
+      "phase": 5,
+      "owner": "coordinator",
+      "depends_on": [
+        "P5-03"
+      ],
+      "title": "Decide whether semantic search is warranted",
+      "acceptance": "ADR includes observed benchmark and tradeoff",
+      "owned_paths": [
+        "docs/adr/",
+        "project/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P6-01",
+      "phase": 6,
+      "owner": "platform_engineer",
+      "depends_on": [
+        "P3-07",
+        "P4-06"
+      ],
+      "title": "Terraform AWS staging modules with cost/security plan",
+      "acceptance": "Terraform validation and security checks pass; no deployment yet",
+      "owned_paths": [
+        "infra/terraform/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P6-02",
+      "phase": 6,
+      "owner": "platform_engineer",
+      "depends_on": [
+        "P6-01"
+      ],
+      "title": "Container readiness, deployment, migration and rollback steps",
+      "acceptance": "Local dry-run and staging plan pass",
+      "owned_paths": [
+        "deploy/",
+        ".github/workflows/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P6-03",
+      "phase": 6,
+      "owner": "platform_engineer",
+      "depends_on": [
+        "P6-01"
+      ],
+      "title": "Monitoring, budgets, backups and recovery runbooks",
+      "acceptance": "Alerts tested and restore exercise documented",
+      "owned_paths": [
+        "infra/",
+        "docs/runbooks/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P6-04",
+      "phase": 6,
+      "owner": "qa_reviewer",
+      "depends_on": [
+        "P6-02",
+        "P6-03"
+      ],
+      "title": "Infrastructure security/reliability review",
+      "acceptance": "No public DB/S3 and least-privilege findings closed",
+      "owned_paths": [
+        "tests/infrastructure/",
+        "docs/security/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P6-05",
+      "phase": 6,
+      "owner": "coordinator",
+      "depends_on": [
+        "P6-04"
+      ],
+      "title": "Human approval for billable AWS staging deployment",
+      "acceptance": "Approval recorded and deployment smoke test observed",
+      "owned_paths": [
+        "project/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P7-01",
+      "phase": 7,
+      "owner": "integration_engineer",
+      "depends_on": [
+        "P6-05"
+      ],
+      "title": "Real Claude Code MCP and prompts usage test",
+      "acceptance": "Connection to verified skill retrieval recorded",
+      "owned_paths": [
+        "integrations/claude-code/",
+        "tests/e2e/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P7-02",
+      "phase": 7,
+      "owner": "integration_engineer",
+      "depends_on": [
+        "P6-05"
+      ],
+      "title": "Real Codex CLI MCP and skill usage test",
+      "acceptance": "Fallback or native behavior and updates documented",
+      "owned_paths": [
+        "integrations/codex/",
+        "tests/e2e/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P7-03",
+      "phase": 7,
+      "owner": "integration_engineer",
+      "depends_on": [
+        "P6-05"
+      ],
+      "title": "Real Cursor MCP behavior test",
+      "acceptance": "Verified vs unsupported UI invocation recorded",
+      "owned_paths": [
+        "integrations/cursor/",
+        "tests/e2e/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P7-04",
+      "phase": 7,
+      "owner": "qa_reviewer",
+      "depends_on": [
+        "P7-01",
+        "P7-02",
+        "P7-03",
+        "P5-04"
+      ],
+      "title": "Performance, security and release candidate review",
+      "acceptance": "Real-client matrix and measured latency pass release criteria",
+      "owned_paths": [
+        "tests/load/",
+        "tests/e2e/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P7-05",
+      "phase": 7,
+      "owner": "coordinator",
+      "depends_on": [
+        "P7-04"
+      ],
+      "title": "Approve private beta release",
+      "acceptance": "Human signoff and support docs",
+      "owned_paths": [
+        "project/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P8-01",
+      "phase": 8,
+      "owner": "security_engineer",
+      "depends_on": [
+        "P7-05"
+      ],
+      "title": "Organization policies, approval, audit export and abuse response",
+      "acceptance": "Tenant-policy and audit checks pass",
+      "owned_paths": [
+        "packages/security/",
+        "docs/security/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P8-02",
+      "phase": 8,
+      "owner": "platform_engineer",
+      "depends_on": [
+        "P7-05"
+      ],
+      "title": "SLOs, DR runbooks and production hardening",
+      "acceptance": "Recovery, alert, cost and scaling evidence",
+      "owned_paths": [
+        "infra/",
+        "docs/runbooks/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P8-03",
+      "phase": 8,
+      "owner": "coordinator",
+      "depends_on": [
+        "P8-01",
+        "P8-02"
+      ],
+      "title": "Public launch readiness/security decision",
+      "acceptance": "Release checklist and human approval signed",
+      "owned_paths": [
+        "project/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    },
+    {
+      "id": "P9-01",
+      "phase": 9,
+      "owner": "research_agent",
+      "depends_on": [
+        "P8-03"
+      ],
+      "title": "Evaluate skill bundles, client adapters and recommender roadmap",
+      "acceptance": "Evidence-based post-beta roadmap",
+      "owned_paths": [
+        "docs/research/"
+      ],
+      "status": "BACKLOG",
+      "evidence": []
+    }
+  ]
+}

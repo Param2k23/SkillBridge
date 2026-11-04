@@ -1,0 +1,6 @@
+# Project-level Codex subagent defaults.
+# Current local Codex builds support project-scoped agent TOML files.
+# Begin conservatively on ChatGPT Plus; increase only after checking usage.
+[agents]
+enabled = true
+max_concurrent_threads_per_session = 3
