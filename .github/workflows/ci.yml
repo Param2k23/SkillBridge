@@ -1,0 +1,59 @@
+name: Engineering checks
+
+on:
+  pull_request:
+  push:
+    branches: [main, master, 'integration/**']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      CI: 'true'
+      COREPACK_HOME: ${{ runner.temp }}/skillbridge-corepack
+      COREPACK_ENABLE_DOWNLOAD_PROMPT: '0'
+    defaults:
+      run:
+        shell: bash
+    steps:
+      # Official tag refs verified with git ls-remote on 2026-11-04.
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24.21.0'
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.14.4'
+      - name: Frozen dependency installation
+        run: corepack pnpm install --frozen-lockfile --fetch-retries=0 --fetch-timeout=10000
+      - name: Lint
+        run: corepack pnpm lint
+      - name: Strict typecheck
+        run: corepack pnpm typecheck
+      - name: Unit and conformance tests
+        run: corepack pnpm test
+      - name: Build
+        run: corepack pnpm build
+      - name: Task graph and negative tests
+        run: |
+          set -euo pipefail
+          python3 scripts/validate_task_graph.py
+          python3 -m unittest discover -s scripts -p 'test_*.py' -v
+      - name: CI helper negative tests
+        run: python3 -m unittest discover -s .github/scripts -p 'test_*.py' -v
+      - name: Secret scan
+        run: python3 .github/scripts/secret_scan.py
+      - name: Dependency vulnerability audit
+        run: corepack pnpm audit --audit-level=low
+      - name: Reproducible emitted build
+        run: python3 .github/scripts/check_reproducible.py
