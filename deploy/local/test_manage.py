@@ -65,6 +65,44 @@ class LocalPolicyTests(unittest.TestCase):
                 manage.require_local_docker('docker')
             self.assertEqual(run.call_count, 1)
 
+    def test_remote_named_pipe_host_rejected_before_cli(self):
+        with patch.dict(os.environ, {'DOCKER_HOST': 'npipe:////remote-host/pipe/docker_engine'}), patch.object(manage, 'run') as run:
+            with self.assertRaisesRegex(ValueError, 'Remote DOCKER_HOST'):
+                manage.require_local_docker('docker.exe')
+            run.assert_not_called()
+
+    def test_remote_named_pipe_context_rejected_before_info(self):
+        response = subprocess.CompletedProcess([], 0, stdout='"npipe:////remote-host/pipe/docker_engine"')
+        with patch.dict(os.environ, {}, clear=True), patch.object(manage, 'run', return_value=response) as run:
+            with self.assertRaisesRegex(ValueError, 'Remote Docker context'):
+                manage.require_local_docker('docker.exe')
+            self.assertEqual(run.call_count, 1)
+
+    def test_local_contexts_reach_info(self):
+        # Unit guard coverage only. Mocking these commands does not prove that an
+        # engine exists or that Compose/services can start.
+        for endpoint in ('unix:///var/run/docker.sock',
+                         'unix:///home/user/.docker/desktop/docker.sock',
+                         'npipe:////./pipe/docker_engine',
+                         'npipe:////./pipe/dockerDesktopLinuxEngine'):
+            with self.subTest(endpoint=endpoint):
+                responses = [subprocess.CompletedProcess([], 0, stdout=json.dumps(endpoint)),
+                             subprocess.CompletedProcess([], 0, stdout='')]
+                with patch.dict(os.environ, {}, clear=True), patch.object(manage, 'run', side_effect=responses) as run:
+                    manage.require_local_docker('docker')
+                    self.assertEqual(run.call_args_list[-1].args[0], ['docker', 'info'])
+
+    def test_noncanonical_endpoint_forms_rejected(self):
+        for endpoint in ('unix://remote/tmp/socket', 'unix:////tmp/socket',
+                         'unix:///tmp/../socket', 'unix:///tmp/./socket',
+                         'unix:///tmp/socket?x=1', 'unix:///tmp/socket#fragment',
+                         'unix:///tmp/%73ocket', 'unix:///tmp/socket/',
+                         'unix:///tmp/with space/socket', 'unix:///tmp/socket\\name',
+                         'npipe:////localhost/pipe/docker_engine',
+                         'npipe:////./pipe/unreviewed', None, [], {}):
+            with self.subTest(endpoint=endpoint):
+                self.assertFalse(manage.is_local_docker_endpoint(endpoint))
+
     def test_redirect_is_never_followed(self):
         with self.assertRaisesRegex(ValueError, 'Redirect refused'):
             manage.NoRedirect().redirect_request(None, None, 302, '', {}, 'https://example.invalid')

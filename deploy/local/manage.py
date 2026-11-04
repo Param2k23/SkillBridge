@@ -43,14 +43,34 @@ def run(args: list[str], **kwargs) -> subprocess.CompletedProcess:
     return subprocess.run(args, cwd=ROOT, timeout=kwargs.pop('timeout', 30), check=True, **kwargs)
 
 
+def is_local_docker_endpoint(endpoint: object) -> bool:
+    # Named pipes can address other Windows hosts. Only these reviewed local
+    # Docker Engine/Desktop pipe names and the literal dot authority are allowed.
+    if not isinstance(endpoint, str):
+        return False
+    if endpoint in {
+        'npipe:////./pipe/docker_engine',
+        'npipe:////./pipe/dockerDesktopLinuxEngine',
+    }:
+        return True
+    if not endpoint.startswith('unix:///'):
+        return False
+    # Require an absolute canonical path: no authority, percent escapes, query,
+    # fragment, empty/dot segments, Windows separators or whitespace.
+    segments = endpoint[len('unix:///'):].split('/')
+    return all(segment not in {'', '.', '..'} and
+               re.fullmatch(r'[A-Za-z0-9_.-]+', segment) is not None
+               for segment in segments)
+
+
 def require_local_docker(binary: str) -> None:
     host = os.environ.get('DOCKER_HOST')
-    if host is not None and not host.startswith(('unix://', 'npipe://')):
+    if host is not None and not is_local_docker_endpoint(host):
         raise ValueError('Remote DOCKER_HOST is forbidden for local smoke checks')
     context = run([binary, 'context', 'inspect', '--format', '{{json .Endpoints.docker.Host}}'],
                   text=True, capture_output=True)
     endpoint = json.loads(context.stdout)
-    if not isinstance(endpoint, str) or not endpoint.startswith(('unix://', 'npipe://')):
+    if not is_local_docker_endpoint(endpoint):
         raise ValueError('Remote Docker context is forbidden for local smoke checks')
     run([binary, 'info'], text=True, capture_output=True)
 

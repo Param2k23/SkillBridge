@@ -37,8 +37,14 @@ python3 deploy/local/manage.py down
 `check` and the unit tests only validate local configuration/failure behavior.
 `config` invokes real Compose parsing. `up` first requires a local Docker
 socket/named-pipe context and reachable engine, then starts both dependencies with
-a bounded readiness wait and performs the real smoke check. It may download the
-two pinned images. `smoke` does not start services; it requires the running stack.
+a bounded readiness wait and performs the real smoke check. The guard permits
+only canonical absolute Unix socket URIs (`unix:///path/to/socket`) and these
+reviewed local Windows pipes: `npipe:////./pipe/docker_engine` and
+`npipe:////./pipe/dockerDesktopLinuxEngine`. Other authorities, remote named pipes,
+noncanonical paths, percent escapes and unreviewed pipe names are rejected.
+`DOCKER_HOST` is checked before any CLI call, then the selected context before
+engine access. Unit tests of this guard use mocks and do not prove startup.
+Starting the stack may download the two pinned images. `smoke` does not start services; it requires the running stack.
 No success is reported if Docker, PostgreSQL, or S3Mock is unavailable.
 
 Ports are bound only to `127.0.0.1`: PostgreSQL **15432**, S3Mock HTTP **19090**.
@@ -85,7 +91,8 @@ No commands alter Windows settings or use external credentials.
 
 Fresh authoring-environment checks found no reachable Docker daemon. The installed
 Windows Compose CLI parsed this real file successfully using its WSL UNC path;
-static policy and ten unit tests also passed. Linux/WSL Compose startup and smoke
+Static policy and fourteen unit tests also passed after the named-pipe guard
+repair. Linux/WSL Compose startup and smoke
 failed at the missing integration, and Windows Docker reported the absent engine
 pipe. These results do not verify startup/readiness/database/object round trips.
 P1-05 remains BLOCKED until actual fresh startup and both round trips pass and
