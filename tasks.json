@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "project": "SkillBridge",
-  "status_note": "Seed task graph. Coordinator must set states only with evidence. Phase 0 first.",
+  "status_note": "Phase 0 DONE: independent QA PASS and local clean-snapshot validation. P1-01/P1-02 READY; other P1 tasks dependency-gated. No product package/hosted CI claims.",
   "tasks": [
     {
       "id": "P0-01",
@@ -13,8 +13,14 @@
       "owned_paths": [
         "docs/research/"
       ],
-      "status": "BACKLOG",
-      "evidence": []
+      "status": "DONE",
+      "evidence": [
+        "docs/research/standards.md",
+        "docs/adr/0002-protocol-profiles.md",
+        "project/evidence/phase-0-review.md",
+        "project/evidence/phase-0-validation.log"
+      ],
+      "risk_level": "medium"
     },
     {
       "id": "P0-02",
@@ -26,8 +32,13 @@
       "owned_paths": [
         "docs/security/"
       ],
-      "status": "BACKLOG",
-      "evidence": []
+      "status": "DONE",
+      "evidence": [
+        "docs/security/threat-model.md",
+        "project/evidence/phase-0-review.md",
+        "project/evidence/phase-0-validation.log"
+      ],
+      "risk_level": "high"
     },
     {
       "id": "P0-03",
@@ -39,8 +50,15 @@
       "owned_paths": [
         "docs/protocol/"
       ],
-      "status": "BACKLOG",
-      "evidence": []
+      "status": "DONE",
+      "evidence": [
+        "docs/protocol/skillbridge-v1.schema.json",
+        "docs/protocol/contracts.md",
+        "docs/fixtures/contract-cases.json",
+        "project/evidence/phase-0-review.md",
+        "project/evidence/phase-0-validation.log"
+      ],
+      "risk_level": "medium"
     },
     {
       "id": "P0-04",
@@ -54,8 +72,13 @@
       "owned_paths": [
         "docs/protocol/"
       ],
-      "status": "BACKLOG",
-      "evidence": []
+      "status": "DONE",
+      "evidence": [
+        "docs/protocol/client-capabilities.md",
+        "project/evidence/phase-0-review.md",
+        "project/evidence/phase-0-validation.log"
+      ],
+      "risk_level": "medium"
     },
     {
       "id": "P0-05",
@@ -72,8 +95,16 @@
       "owned_paths": [
         "docs/adr/"
       ],
-      "status": "BACKLOG",
-      "evidence": []
+      "status": "DONE",
+      "evidence": [
+        "docs/adr/0001-product-and-trust-boundaries.md",
+        "docs/adr/0002-protocol-profiles.md",
+        "docs/adr/0003-contract-and-workspace-conventions.md",
+        "project/phase-1-wave.md",
+        "project/evidence/phase-0-review.md",
+        "project/evidence/phase-0-validation.log"
+      ],
+      "risk_level": "medium"
     },
     {
       "id": "P1-01",
@@ -88,10 +119,20 @@
         "apps/",
         "packages/",
         "package.json",
-        "pnpm-lock.yaml"
+        "pnpm-lock.yaml",
+        "pnpm-workspace.yaml",
+        "tsconfig*.json",
+        "eslint.config.*",
+        ".prettier*",
+        ".npmrc",
+        ".node-version",
+        ".gitignore"
       ],
-      "status": "BACKLOG",
-      "evidence": []
+      "status": "READY",
+      "evidence": [
+        "project/phase-1-wave.md"
+      ],
+      "risk_level": "medium"
     },
     {
       "id": "P1-02",
@@ -105,10 +146,18 @@
       "owned_paths": [
         "AGENTS.md",
         "project/",
-        "docs/"
+        "docs/",
+        "scripts/validate_task_graph.py",
+        "scripts/test_validate_task_graph.py",
+        ".github/ISSUE_TEMPLATE/",
+        ".github/pull_request_template.md",
+        "CONTRIBUTING.md"
       ],
-      "status": "BACKLOG",
-      "evidence": []
+      "status": "READY",
+      "evidence": [
+        "project/phase-1-wave.md"
+      ],
+      "risk_level": "medium"
     },
     {
       "id": "P1-03",
@@ -128,7 +177,7 @@
     {
       "id": "P1-04",
       "phase": 1,
-      "owner": "qa_reviewer",
+      "owner": "integration_engineer",
       "depends_on": [
         "P1-01"
       ],
@@ -183,7 +232,7 @@
         "P1-06"
       ],
       "title": "Build stateless Streamable HTTP MCP server",
-      "acceptance": "Initialize and two concurrent requests pass integration tests",
+      "acceptance": "Modern 2026-07-28 server/discover and legacy 2025-11-25 initialize each pass integration tests; concurrent requests and unsupported-version/header metadata negatives pass independently per profile",
       "owned_paths": [
         "apps/mcp-server/",
         "packages/protocol/"
@@ -413,7 +462,7 @@
         "P3-07"
       ],
       "title": "Tenant ACL and public/unlisted/org/private policy",
-      "acceptance": "Cross-tenant list/get/file/search tests fail closed",
+      "acceptance": "Cross-tenant list/get/file/search fail closed; organization visibility requires trusted organization-to-tenant binding and active membership; missing or mismatched binding denied",
       "owned_paths": [
         "packages/security/",
         "packages/auth/"

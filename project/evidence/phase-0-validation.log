@@ -1,0 +1,21 @@
+Final Phase 0 clean filesystem snapshot; Python environment unchanged.
+No product bootstrap or hosted CI claimed.
+$ python3 scripts/validate_phase0.py
+Validated 57 recorded positive/negative schema cases
+test_meta_schema (__main__.Phase0Contracts.test_meta_schema) ... ok
+test_original_samples_and_integrity (__main__.Phase0Contracts.test_original_samples_and_integrity) ... ok
+test_recorded_contract_cases (__main__.Phase0Contracts.test_recorded_contract_cases) ... ok
+test_semantic_rejections (__main__.Phase0Contracts.test_semantic_rejections) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.397s
+
+OK
+
+exit=0
+$ python3 scripts/validate_task_graph.py
+PASS: 48 tasks; unique IDs; valid dependencies; DAG is acyclic
+
+exit=0
+All changed/new file whitespace checks: PASS (no-index difference exit 1 accepted).
+Closure/dependency/evidence link assertions: PASS.

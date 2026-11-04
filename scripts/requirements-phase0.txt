@@ -1,0 +1,2 @@
+# Only for standalone Phase 0 JSON Schema validation; not a product dependency.
+jsonschema[format]==4.19.2

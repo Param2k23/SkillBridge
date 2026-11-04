@@ -1,0 +1,726 @@
+[
+  {
+    "name": "id team/skill",
+    "definition": "CanonicalSkillId",
+    "value": "team/skill",
+    "valid": true
+  },
+  {
+    "name": "id a/b",
+    "definition": "CanonicalSkillId",
+    "value": "a/b",
+    "valid": true
+  },
+  {
+    "name": "id team-1/my-skill",
+    "definition": "CanonicalSkillId",
+    "value": "team-1/my-skill",
+    "valid": true
+  },
+  {
+    "name": "bad id 'Team/skill'",
+    "definition": "CanonicalSkillId",
+    "value": "Team/skill",
+    "valid": false
+  },
+  {
+    "name": "bad id 'team/../skill'",
+    "definition": "CanonicalSkillId",
+    "value": "team/../skill",
+    "valid": false
+  },
+  {
+    "name": "bad id 'team//skill'",
+    "definition": "CanonicalSkillId",
+    "value": "team//skill",
+    "valid": false
+  },
+  {
+    "name": "bad id 'team/skill\\n'",
+    "definition": "CanonicalSkillId",
+    "value": "team/skill\n",
+    "valid": false
+  },
+  {
+    "name": "bad id 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx/skill'",
+    "definition": "CanonicalSkillId",
+    "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx/skill",
+    "valid": false
+  },
+  {
+    "name": "bad id 'team/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'",
+    "definition": "CanonicalSkillId",
+    "value": "team/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "valid": false
+  },
+  {
+    "name": "bad id 'team/skill@1.0.0'",
+    "definition": "CanonicalSkillId",
+    "value": "team/skill@1.0.0",
+    "valid": false
+  },
+  {
+    "name": "version 0.0.0",
+    "definition": "Version",
+    "value": "0.0.0",
+    "valid": true
+  },
+  {
+    "name": "version 1.20.300",
+    "definition": "Version",
+    "value": "1.20.300",
+    "valid": true
+  },
+  {
+    "name": "bad version '01.0.0'",
+    "definition": "Version",
+    "value": "01.0.0",
+    "valid": false
+  },
+  {
+    "name": "bad version '1.0'",
+    "definition": "Version",
+    "value": "1.0",
+    "valid": false
+  },
+  {
+    "name": "bad version '1.0.0-beta'",
+    "definition": "Version",
+    "value": "1.0.0-beta",
+    "valid": false
+  },
+  {
+    "name": "bad version '1.0.0+build'",
+    "definition": "Version",
+    "value": "1.0.0+build",
+    "valid": false
+  },
+  {
+    "name": "bad version '1.0.0\\n'",
+    "definition": "Version",
+    "value": "1.0.0\n",
+    "valid": false
+  },
+  {
+    "name": "valid manifest",
+    "definition": "SkillManifest",
+    "value": {
+      "schemaVersion": "1.0",
+      "skillId": "skillbridge/with-references",
+      "version": "1.0.0",
+      "name": "with-references",
+      "description": "Review a supplied change using the provided checklist.",
+      "license": "CC0-1.0",
+      "provenance": {
+        "kind": "original",
+        "source": "project-authored",
+        "rightsAttested": true
+      },
+      "files": [
+        {
+          "path": "SKILL.md",
+          "mediaType": "text/markdown",
+          "sizeBytes": 178,
+          "sha256": "64afe5ff0fff249403b40b84a0aeec94333f24748c61eff30f3c5d657ed48379"
+        },
+        {
+          "path": "references/checklist.md",
+          "mediaType": "text/markdown",
+          "sizeBytes": 92,
+          "sha256": "8f13923d3b7117cec6049f5278b43ff548368e0fe96f1a13dc128120448815e9"
+        }
+      ]
+    },
+    "valid": true
+  },
+  {
+    "name": "unsafe path '../SKILL.md'",
+    "definition": "SkillFile",
+    "value": {
+      "path": "../SKILL.md",
+      "mediaType": "text/markdown",
+      "sizeBytes": 92,
+      "sha256": "8f13923d3b7117cec6049f5278b43ff548368e0fe96f1a13dc128120448815e9"
+    },
+    "valid": false
+  },
+  {
+    "name": "unsafe path '/SKILL.md'",
+    "definition": "SkillFile",
+    "value": {
+      "path": "/SKILL.md",
+      "mediaType": "text/markdown",
+      "sizeBytes": 92,
+      "sha256": "8f13923d3b7117cec6049f5278b43ff548368e0fe96f1a13dc128120448815e9"
+    },
+    "valid": false
+  },
+  {
+    "name": "unsafe path 'references/../x.md'",
+    "definition": "SkillFile",
+    "value": {
+      "path": "references/../x.md",
+      "mediaType": "text/markdown",
+      "sizeBytes": 92,
+      "sha256": "8f13923d3b7117cec6049f5278b43ff548368e0fe96f1a13dc128120448815e9"
+    },
+    "valid": false
+  },
+  {
+    "name": "unsafe path 'references/%2e%2e/x.md'",
+    "definition": "SkillFile",
+    "value": {
+      "path": "references/%2e%2e/x.md",
+      "mediaType": "text/markdown",
+      "sizeBytes": 92,
+      "sha256": "8f13923d3b7117cec6049f5278b43ff548368e0fe96f1a13dc128120448815e9"
+    },
+    "valid": false
+  },
+  {
+    "name": "unsafe path 'references\\\\x.md'",
+    "definition": "SkillFile",
+    "value": {
+      "path": "references\\x.md",
+      "mediaType": "text/markdown",
+      "sizeBytes": 92,
+      "sha256": "8f13923d3b7117cec6049f5278b43ff548368e0fe96f1a13dc128120448815e9"
+    },
+    "valid": false
+  },
+  {
+    "name": "unsafe path 'references/x.sh'",
+    "definition": "SkillFile",
+    "value": {
+      "path": "references/x.sh",
+      "mediaType": "text/markdown",
+      "sizeBytes": 92,
+      "sha256": "8f13923d3b7117cec6049f5278b43ff548368e0fe96f1a13dc128120448815e9"
+    },
+    "valid": false
+  },
+  {
+    "name": "unsafe path 'C:/x.md'",
+    "definition": "SkillFile",
+    "value": {
+      "path": "C:/x.md",
+      "mediaType": "text/markdown",
+      "sizeBytes": 92,
+      "sha256": "8f13923d3b7117cec6049f5278b43ff548368e0fe96f1a13dc128120448815e9"
+    },
+    "valid": false
+  },
+  {
+    "name": "unsafe path 'references/x.md\\n'",
+    "definition": "SkillFile",
+    "value": {
+      "path": "references/x.md\n",
+      "mediaType": "text/markdown",
+      "sizeBytes": 92,
+      "sha256": "8f13923d3b7117cec6049f5278b43ff548368e0fe96f1a13dc128120448815e9"
+    },
+    "valid": false
+  },
+  {
+    "name": "untrusted tenantId",
+    "definition": "SkillManifest",
+    "value": {
+      "schemaVersion": "1.0",
+      "skillId": "skillbridge/with-references",
+      "version": "1.0.0",
+      "name": "with-references",
+      "description": "Review a supplied change using the provided checklist.",
+      "license": "CC0-1.0",
+      "provenance": {
+        "kind": "original",
+        "source": "project-authored",
+        "rightsAttested": true
+      },
+      "files": [
+        {
+          "path": "SKILL.md",
+          "mediaType": "text/markdown",
+          "sizeBytes": 178,
+          "sha256": "64afe5ff0fff249403b40b84a0aeec94333f24748c61eff30f3c5d657ed48379"
+        },
+        {
+          "path": "references/checklist.md",
+          "mediaType": "text/markdown",
+          "sizeBytes": 92,
+          "sha256": "8f13923d3b7117cec6049f5278b43ff548368e0fe96f1a13dc128120448815e9"
+        }
+      ],
+      "tenantId": "other"
+    },
+    "valid": false
+  },
+  {
+    "name": "untrusted grants",
+    "definition": "SkillManifest",
+    "value": {
+      "schemaVersion": "1.0",
+      "skillId": "skillbridge/with-references",
+      "version": "1.0.0",
+      "name": "with-references",
+      "description": "Review a supplied change using the provided checklist.",
+      "license": "CC0-1.0",
+      "provenance": {
+        "kind": "original",
+        "source": "project-authored",
+        "rightsAttested": true
+      },
+      "files": [
+        {
+          "path": "SKILL.md",
+          "mediaType": "text/markdown",
+          "sizeBytes": 178,
+          "sha256": "64afe5ff0fff249403b40b84a0aeec94333f24748c61eff30f3c5d657ed48379"
+        },
+        {
+          "path": "references/checklist.md",
+          "mediaType": "text/markdown",
+          "sizeBytes": 92,
+          "sha256": "8f13923d3b7117cec6049f5278b43ff548368e0fe96f1a13dc128120448815e9"
+        }
+      ],
+      "grants": []
+    },
+    "valid": false
+  },
+  {
+    "name": "untrusted visibility",
+    "definition": "SkillManifest",
+    "value": {
+      "schemaVersion": "1.0",
+      "skillId": "skillbridge/with-references",
+      "version": "1.0.0",
+      "name": "with-references",
+      "description": "Review a supplied change using the provided checklist.",
+      "license": "CC0-1.0",
+      "provenance": {
+        "kind": "original",
+        "source": "project-authored",
+        "rightsAttested": true
+      },
+      "files": [
+        {
+          "path": "SKILL.md",
+          "mediaType": "text/markdown",
+          "sizeBytes": 178,
+          "sha256": "64afe5ff0fff249403b40b84a0aeec94333f24748c61eff30f3c5d657ed48379"
+        },
+        {
+          "path": "references/checklist.md",
+          "mediaType": "text/markdown",
+          "sizeBytes": 92,
+          "sha256": "8f13923d3b7117cec6049f5278b43ff548368e0fe96f1a13dc128120448815e9"
+        }
+      ],
+      "visibility": "public"
+    },
+    "valid": false
+  },
+  {
+    "name": "bad file sha256AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "definition": "SkillFile",
+    "value": {
+      "path": "SKILL.md",
+      "mediaType": "text/markdown",
+      "sizeBytes": 178,
+      "sha256": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "valid": false
+  },
+  {
+    "name": "bad file sizeBytes1048577",
+    "definition": "SkillFile",
+    "value": {
+      "path": "SKILL.md",
+      "mediaType": "text/markdown",
+      "sizeBytes": 1048577,
+      "sha256": "64afe5ff0fff249403b40b84a0aeec94333f24748c61eff30f3c5d657ed48379"
+    },
+    "valid": false
+  },
+  {
+    "name": "bad file sizeBytes0",
+    "definition": "SkillFile",
+    "value": {
+      "path": "SKILL.md",
+      "mediaType": "text/markdown",
+      "sizeBytes": 0,
+      "sha256": "64afe5ff0fff249403b40b84a0aeec94333f24748c61eff30f3c5d657ed48379"
+    },
+    "valid": false
+  },
+  {
+    "name": "duplicate root",
+    "definition": "SkillManifest",
+    "value": {
+      "schemaVersion": "1.0",
+      "skillId": "skillbridge/with-references",
+      "version": "1.0.0",
+      "name": "with-references",
+      "description": "Review a supplied change using the provided checklist.",
+      "license": "CC0-1.0",
+      "provenance": {
+        "kind": "original",
+        "source": "project-authored",
+        "rightsAttested": true
+      },
+      "files": [
+        {
+          "path": "SKILL.md",
+          "mediaType": "text/markdown",
+          "sizeBytes": 178,
+          "sha256": "64afe5ff0fff249403b40b84a0aeec94333f24748c61eff30f3c5d657ed48379"
+        },
+        {
+          "path": "references/checklist.md",
+          "mediaType": "text/markdown",
+          "sizeBytes": 92,
+          "sha256": "8f13923d3b7117cec6049f5278b43ff548368e0fe96f1a13dc128120448815e9"
+        },
+        {
+          "path": "SKILL.md",
+          "mediaType": "text/markdown",
+          "sizeBytes": 178,
+          "sha256": "64afe5ff0fff249403b40b84a0aeec94333f24748c61eff30f3c5d657ed48379"
+        }
+      ]
+    },
+    "valid": false
+  },
+  {
+    "name": "missing root",
+    "definition": "SkillManifest",
+    "value": {
+      "schemaVersion": "1.0",
+      "skillId": "skillbridge/with-references",
+      "version": "1.0.0",
+      "name": "with-references",
+      "description": "Review a supplied change using the provided checklist.",
+      "license": "CC0-1.0",
+      "provenance": {
+        "kind": "original",
+        "source": "project-authored",
+        "rightsAttested": true
+      },
+      "files": [
+        {
+          "path": "references/checklist.md",
+          "mediaType": "text/markdown",
+          "sizeBytes": 92,
+          "sha256": "8f13923d3b7117cec6049f5278b43ff548368e0fe96f1a13dc128120448815e9"
+        }
+      ]
+    },
+    "valid": false
+  },
+  {
+    "name": "version envelope",
+    "definition": "SkillVersion",
+    "value": {
+      "ref": "skillbridge/with-references@1.0.0",
+      "manifest": {
+        "schemaVersion": "1.0",
+        "skillId": "skillbridge/with-references",
+        "version": "1.0.0",
+        "name": "with-references",
+        "description": "Review a supplied change using the provided checklist.",
+        "license": "CC0-1.0",
+        "provenance": {
+          "kind": "original",
+          "source": "project-authored",
+          "rightsAttested": true
+        },
+        "files": [
+          {
+            "path": "SKILL.md",
+            "mediaType": "text/markdown",
+            "sizeBytes": 178,
+            "sha256": "64afe5ff0fff249403b40b84a0aeec94333f24748c61eff30f3c5d657ed48379"
+          },
+          {
+            "path": "references/checklist.md",
+            "mediaType": "text/markdown",
+            "sizeBytes": 92,
+            "sha256": "8f13923d3b7117cec6049f5278b43ff548368e0fe96f1a13dc128120448815e9"
+          }
+        ]
+      },
+      "manifestSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "publishedAt": "2026-11-03T00:00:00Z"
+    },
+    "valid": true
+  },
+  {
+    "name": "bad timestamp",
+    "definition": "SkillVersion",
+    "value": {
+      "ref": "skillbridge/with-references@1.0.0",
+      "manifest": {
+        "schemaVersion": "1.0",
+        "skillId": "skillbridge/with-references",
+        "version": "1.0.0",
+        "name": "with-references",
+        "description": "Review a supplied change using the provided checklist.",
+        "license": "CC0-1.0",
+        "provenance": {
+          "kind": "original",
+          "source": "project-authored",
+          "rightsAttested": true
+        },
+        "files": [
+          {
+            "path": "SKILL.md",
+            "mediaType": "text/markdown",
+            "sizeBytes": 178,
+            "sha256": "64afe5ff0fff249403b40b84a0aeec94333f24748c61eff30f3c5d657ed48379"
+          },
+          {
+            "path": "references/checklist.md",
+            "mediaType": "text/markdown",
+            "sizeBytes": 92,
+            "sha256": "8f13923d3b7117cec6049f5278b43ff548368e0fe96f1a13dc128120448815e9"
+          }
+        ]
+      },
+      "manifestSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "publishedAt": "nonsense"
+    },
+    "valid": false
+  },
+  {
+    "name": "quarantine",
+    "definition": "PublishingStatus",
+    "value": {
+      "jobId": "job_1",
+      "state": "quarantined",
+      "updatedAt": "2026-11-03T00:00:00Z"
+    },
+    "valid": true
+  },
+  {
+    "name": "incomplete publish",
+    "definition": "PublishingStatus",
+    "value": {
+      "jobId": "job_1",
+      "state": "published",
+      "updatedAt": "2026-11-03T00:00:00Z"
+    },
+    "valid": false
+  },
+  {
+    "name": "published",
+    "definition": "PublishingStatus",
+    "value": {
+      "jobId": "job_1",
+      "state": "published",
+      "updatedAt": "2026-11-03T00:00:00Z",
+      "ref": "team/skill@1.0.0",
+      "manifestSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "valid": true
+  },
+  {
+    "name": "untrusted failure text",
+    "definition": "PublishingStatus",
+    "value": {
+      "jobId": "job_1",
+      "state": "failed",
+      "updatedAt": "2026-11-03T00:00:00Z",
+      "errorCode": "raw token"
+    },
+    "valid": false
+  },
+  {
+    "name": "rejected",
+    "definition": "PublishingStatus",
+    "value": {
+      "jobId": "job_1",
+      "state": "rejected",
+      "updatedAt": "2026-11-03T00:00:00Z",
+      "errorCode": "POLICY_DENIED"
+    },
+    "valid": true
+  },
+  {
+    "name": "unfinished with ref",
+    "definition": "PublishingStatus",
+    "value": {
+      "jobId": "job_1",
+      "state": "quarantined",
+      "updatedAt": "2026-11-03T00:00:00Z",
+      "ref": "team/skill@1.0.0"
+    },
+    "valid": false
+  },
+  {
+    "name": "search",
+    "definition": "SearchResult",
+    "value": {
+      "items": []
+    },
+    "valid": true
+  },
+  {
+    "name": "search totals",
+    "definition": "SearchResult",
+    "value": {
+      "items": [],
+      "total": 3
+    },
+    "valid": false
+  },
+  {
+    "name": "error",
+    "definition": "ErrorResponse",
+    "value": {
+      "code": "NOT_FOUND",
+      "message": "Not found",
+      "requestId": "req_1"
+    },
+    "valid": true
+  },
+  {
+    "name": "error leaked stack",
+    "definition": "ErrorResponse",
+    "value": {
+      "code": "INTERNAL",
+      "message": "Error",
+      "requestId": "r",
+      "stack": "trace"
+    },
+    "valid": false
+  },
+  {
+    "name": "alias",
+    "definition": "Alias",
+    "value": {
+      "tenantId": "t1",
+      "skillId": "team/skill",
+      "alias": "stable",
+      "targetRef": "team/skill@1.0.0",
+      "revision": 1
+    },
+    "valid": true
+  },
+  {
+    "name": "grant",
+    "definition": "Grant",
+    "value": {
+      "tenantId": "t1",
+      "skillId": "team/skill",
+      "principalType": "user",
+      "principalId": "u1",
+      "permission": "read"
+    },
+    "valid": true
+  },
+  {
+    "name": "private policy",
+    "definition": "AccessPolicy",
+    "value": {
+      "tenantId": "t1",
+      "skillId": "team/skill",
+      "ownerPrincipalId": "u1",
+      "visibility": "private",
+      "enabled": true,
+      "policyEpoch": 1
+    },
+    "valid": true
+  },
+  {
+    "name": "unapproved public",
+    "definition": "AccessPolicy",
+    "value": {
+      "tenantId": "t1",
+      "skillId": "team/skill",
+      "ownerPrincipalId": "u1",
+      "visibility": "public",
+      "enabled": true,
+      "policyEpoch": 1
+    },
+    "valid": false
+  },
+  {
+    "name": "approved reference syntax",
+    "definition": "AccessPolicy",
+    "value": {
+      "tenantId": "t1",
+      "skillId": "team/skill",
+      "ownerPrincipalId": "u1",
+      "visibility": "public",
+      "enabled": true,
+      "policyEpoch": 1,
+      "publicApprovalId": "approval1"
+    },
+    "valid": true
+  },
+  {
+    "name": "reference overlong version",
+    "definition": "VersionRef",
+    "value": "a/b@1111111111111111111111111111111111111111.0.0",
+    "valid": false
+  },
+  {
+    "name": "maximum length version ref",
+    "definition": "VersionRef",
+    "value": "a/b@1111111111111111111111111111.0.0",
+    "valid": true
+  },
+  {
+    "name": "organization missing binding",
+    "definition": "AccessPolicy",
+    "value": {
+      "tenantId": "t1",
+      "skillId": "team/skill",
+      "ownerPrincipalId": "u1",
+      "visibility": "organization",
+      "enabled": true,
+      "policyEpoch": 1
+    },
+    "valid": false
+  },
+  {
+    "name": "organization explicit binding",
+    "definition": "AccessPolicy",
+    "value": {
+      "tenantId": "t1",
+      "skillId": "team/skill",
+      "ownerPrincipalId": "u1",
+      "visibility": "organization",
+      "enabled": true,
+      "policyEpoch": 1,
+      "owningOrganizationId": "org1"
+    },
+    "valid": true
+  },
+  {
+    "name": "organization binding wrong visibility",
+    "definition": "AccessPolicy",
+    "value": {
+      "tenantId": "t1",
+      "skillId": "team/skill",
+      "ownerPrincipalId": "u1",
+      "visibility": "private",
+      "enabled": true,
+      "policyEpoch": 1,
+      "owningOrganizationId": "org1"
+    },
+    "valid": false
+  },
+  {
+    "name": "alias overlong target version",
+    "definition": "Alias",
+    "valid": false,
+    "value": {
+      "tenantId": "t1",
+      "skillId": "team/skill",
+      "alias": "stable",
+      "targetRef": "a/b@1111111111111111111111111111111111111111.0.0",
+      "revision": 1
+    }
+  }
+]

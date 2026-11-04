@@ -1,0 +1,496 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://skillbridge.invalid/schemas/v1",
+  "$comment": "Definition library. Validate using a named $defs entry, not the unconstrained root. Cross-field and byte checks are mandatory; see contracts.md.",
+  "$defs": {
+    "CanonicalSkillId": {
+      "type": "string",
+      "pattern": "^(?=[^/]{1,63}/)(?=[^/]+/[^@]{1,63}(?:@|$))[a-z0-9]+(?:-[a-z0-9]+)*/[a-z0-9]+(?:-[a-z0-9]+)*$(?![\\s\\S])",
+      "maxLength": 127
+    },
+    "Version": {
+      "type": "string",
+      "pattern": "^(?:0|[1-9][0-9]*)\\.(?:0|[1-9][0-9]*)\\.(?:0|[1-9][0-9]*)$(?![\\s\\S])",
+      "maxLength": 32
+    },
+    "VersionRef": {
+      "type": "string",
+      "pattern": "^(?=[^@]+@[^@]{1,32}$(?![\\s\\S]))(?=[^/]{1,63}/)(?=[^/]+/[^@]{1,63}(?:@|$))[a-z0-9]+(?:-[a-z0-9]+)*/[a-z0-9]+(?:-[a-z0-9]+)*@(?:0|[1-9][0-9]*)\\.(?:0|[1-9][0-9]*)\\.(?:0|[1-9][0-9]*)$(?![\\s\\S])",
+      "maxLength": 160
+    },
+    "Digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$(?![\\s\\S])"
+    },
+    "Identifier": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_-]{1,128}$(?![\\s\\S])"
+    },
+    "Timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$(?![\\s\\S])"
+    },
+    "SkillFile": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^(?:SKILL\\.md|references/(?:[A-Za-z0-9][A-Za-z0-9_-]*/)*[A-Za-z0-9][A-Za-z0-9_-]*\\.(?:md|txt|json))$(?![\\s\\S])",
+          "maxLength": 240
+        },
+        "mediaType": {
+          "enum": [
+            "text/markdown",
+            "text/plain",
+            "application/json"
+          ]
+        },
+        "sizeBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1048576
+        },
+        "sha256": {
+          "$ref": "#/$defs/Digest"
+        }
+      },
+      "required": [
+        "path",
+        "mediaType",
+        "sizeBytes",
+        "sha256"
+      ],
+      "additionalProperties": false
+    },
+    "Provenance": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "original",
+            "authorized-import"
+          ]
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "rightsAttested": {
+          "const": true
+        }
+      },
+      "required": [
+        "kind",
+        "source",
+        "rightsAttested"
+      ],
+      "additionalProperties": false
+    },
+    "SkillManifest": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "1.0"
+        },
+        "skillId": {
+          "$ref": "#/$defs/CanonicalSkillId"
+        },
+        "version": {
+          "$ref": "#/$defs/Version"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024
+        },
+        "license": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "provenance": {
+          "$ref": "#/$defs/Provenance"
+        },
+        "files": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 128,
+          "items": {
+            "$ref": "#/$defs/SkillFile"
+          },
+          "contains": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "const": "SKILL.md"
+              }
+            },
+            "required": [
+              "path"
+            ]
+          },
+          "minContains": 1,
+          "maxContains": 1
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "skillId",
+        "version",
+        "name",
+        "description",
+        "license",
+        "provenance",
+        "files"
+      ],
+      "additionalProperties": false
+    },
+    "SkillVersion": {
+      "type": "object",
+      "properties": {
+        "ref": {
+          "$ref": "#/$defs/VersionRef"
+        },
+        "manifest": {
+          "$ref": "#/$defs/SkillManifest"
+        },
+        "manifestSha256": {
+          "$ref": "#/$defs/Digest"
+        },
+        "publishedAt": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "required": [
+        "ref",
+        "manifest",
+        "manifestSha256",
+        "publishedAt"
+      ],
+      "additionalProperties": false
+    },
+    "SkillSummary": {
+      "type": "object",
+      "properties": {
+        "ref": {
+          "$ref": "#/$defs/VersionRef"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024
+        }
+      },
+      "required": [
+        "ref",
+        "name",
+        "description"
+      ],
+      "additionalProperties": false
+    },
+    "SearchResult": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "maxItems": 100,
+          "items": {
+            "$ref": "#/$defs/SkillSummary"
+          }
+        },
+        "nextCursor": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,2048}$(?![\\s\\S])"
+        }
+      },
+      "required": [
+        "items"
+      ],
+      "additionalProperties": false
+    },
+    "ErrorResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "enum": [
+            "INVALID_ARGUMENT",
+            "UNAUTHENTICATED",
+            "NOT_FOUND",
+            "CONFLICT",
+            "RATE_LIMITED",
+            "INTERNAL"
+          ]
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "requestId": {
+          "$ref": "#/$defs/Identifier"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "requestId"
+      ],
+      "additionalProperties": false
+    },
+    "PublishingStatus": {
+      "type": "object",
+      "properties": {
+        "jobId": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "state": {
+          "enum": [
+            "quarantined",
+            "validating",
+            "published",
+            "rejected",
+            "failed"
+          ]
+        },
+        "updatedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "ref": {
+          "$ref": "#/$defs/VersionRef"
+        },
+        "manifestSha256": {
+          "$ref": "#/$defs/Digest"
+        },
+        "errorCode": {
+          "enum": [
+            "INVALID_CONTENT",
+            "POLICY_DENIED",
+            "INTEGRITY_FAILURE",
+            "INTERNAL"
+          ]
+        }
+      },
+      "required": [
+        "jobId",
+        "state",
+        "updatedAt"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "published"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "ref",
+              "manifestSha256"
+            ],
+            "not": {
+              "required": [
+                "errorCode"
+              ]
+            }
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "ref"
+                  ]
+                },
+                {
+                  "required": [
+                    "manifestSha256"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "failed",
+                  "rejected"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "errorCode"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "errorCode"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "Alias": {
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "skillId": {
+          "$ref": "#/$defs/CanonicalSkillId"
+        },
+        "alias": {
+          "const": "stable"
+        },
+        "targetRef": {
+          "$ref": "#/$defs/VersionRef"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "tenantId",
+        "skillId",
+        "alias",
+        "targetRef",
+        "revision"
+      ],
+      "additionalProperties": false
+    },
+    "Grant": {
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "skillId": {
+          "$ref": "#/$defs/CanonicalSkillId"
+        },
+        "principalType": {
+          "enum": [
+            "user",
+            "organization"
+          ]
+        },
+        "principalId": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "permission": {
+          "const": "read"
+        }
+      },
+      "required": [
+        "tenantId",
+        "skillId",
+        "principalType",
+        "principalId",
+        "permission"
+      ],
+      "additionalProperties": false
+    },
+    "AccessPolicy": {
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "skillId": {
+          "$ref": "#/$defs/CanonicalSkillId"
+        },
+        "ownerPrincipalId": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "visibility": {
+          "enum": [
+            "private",
+            "organization",
+            "unlisted",
+            "public"
+          ]
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "policyEpoch": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "publicApprovalId": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "owningOrganizationId": {
+          "$ref": "#/$defs/Identifier"
+        }
+      },
+      "required": [
+        "tenantId",
+        "skillId",
+        "ownerPrincipalId",
+        "visibility",
+        "enabled",
+        "policyEpoch"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "visibility": {
+                "const": "public"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "publicApprovalId"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "visibility": {
+                "const": "organization"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "owningOrganizationId"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "owningOrganizationId"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}
