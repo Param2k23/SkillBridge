@@ -1,0 +1,3 @@
+# Optional host SQL/lifecycle validation only; install in an isolated local venv.
+psycopg==3.3.8
+psycopg-binary==3.3.8

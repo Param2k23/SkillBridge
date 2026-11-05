@@ -9,9 +9,6 @@
         "POSTGRES_PASSWORD": "local-only-disposable",
         "POSTGRES_INITDB_ARGS": "--auth-host=scram-sha-256"
       },
-      "ports": [
-        { "target": 5432, "published": "15432", "host_ip": "127.0.0.1" }
-      ],
       "volumes": ["postgres-data:/var/lib/postgresql"],
       "healthcheck": {
         "test": ["CMD", "pg_isready", "-U", "skillbridge", "-d", "skillbridge"],
@@ -27,9 +24,6 @@
     },
     "s3mock": {
       "image": "adobe/s3mock:5.2.3@sha256:ab01a6946750f451ca215a47e91030695b260e4003b8a5a6201d25029b8fca92",
-      "ports": [
-        { "target": 9090, "published": "19090", "host_ip": "127.0.0.1" }
-      ],
       "healthcheck": {
         "test": [
           "CMD",
@@ -47,8 +41,66 @@
       "mem_limit": "512m",
       "cpus": 1.0,
       "networks": ["local"]
+    },
+    "proxy": {
+      "image": "haproxy:3.2.26-alpine3.24@sha256:5893840576071e6217cd52ebdcc14f454c6f7a631056fa6f4e0f40d3cac4215b",
+      "user": "65534:65534",
+      "read_only": true,
+      "cap_drop": ["ALL"],
+      "ports": [
+        {
+          "target": 15432,
+          "published": "15432",
+          "host_ip": "127.0.0.1"
+        },
+        {
+          "target": 19090,
+          "published": "19090",
+          "host_ip": "127.0.0.1"
+        }
+      ],
+      "volumes": ["./local/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro"],
+      "depends_on": {
+        "postgres": {
+          "condition": "service_healthy"
+        },
+        "s3mock": {
+          "condition": "service_healthy"
+        }
+      },
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "wget",
+          "--spider",
+          "-q",
+          "-T",
+          "2",
+          "http://127.0.0.1:19090/favicon.ico"
+        ],
+        "interval": "5s",
+        "timeout": "3s",
+        "retries": 12,
+        "start_period": "5s"
+      },
+      "security_opt": ["no-new-privileges:true"],
+      "mem_limit": "64m",
+      "cpus": 0.5,
+      "networks": ["local", "edge"]
     }
   },
-  "volumes": { "postgres-data": {} },
-  "networks": { "local": { "internal": true } }
+  "volumes": {
+    "postgres-data": {}
+  },
+  "networks": {
+    "local": {
+      "internal": true
+    },
+    "edge": {
+      "internal": false,
+      "driver_opts": {
+        "com.docker.network.bridge.host_binding_ipv4": "127.0.0.1"
+      }
+    }
+  }
 }
