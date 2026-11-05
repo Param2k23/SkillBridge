@@ -1,0 +1,21 @@
+$ node sdk-import-smoke.mjs
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert.ok(modules.server.SUPPORTED_PROTOCOL_VERSIONS.includes('2026-07-28'))
+
+    at file:///tmp/skillbridge-p1-sdk-preflight/sdk-import-smoke.mjs:25:8 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.21.0
+
+exit=1

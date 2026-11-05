@@ -1,0 +1,56 @@
+$ node sdk-import-smoke.mjs
+{
+  "status": "PASS",
+  "node": "24.21.0",
+  "packages": [
+    {
+      "name": "@modelcontextprotocol/server",
+      "version": "2.4.0",
+      "nodeEngine": ">=20"
+    },
+    {
+      "name": "@modelcontextprotocol/client",
+      "version": "2.4.0",
+      "nodeEngine": ">=20"
+    },
+    {
+      "name": "@modelcontextprotocol/core",
+      "version": "2.4.0",
+      "nodeEngine": ">=20"
+    },
+    {
+      "name": "@modelcontextprotocol/node",
+      "version": "2.1.2",
+      "nodeEngine": ">=20"
+    },
+    {
+      "name": "@modelcontextprotocol/server-legacy",
+      "version": "2.4.0",
+      "nodeEngine": ">=20"
+    }
+  ],
+  "imports": 8,
+  "profiles": [
+    "2026-07-28",
+    "2025-11-25"
+  ],
+  "profileEvidence": "installed implementation constants and public handler exports; not wire conformance",
+  "legacyNegotiationConstant": [
+    "2025-11-25",
+    "2025-06-18",
+    "2025-03-26",
+    "2024-11-05",
+    "2024-10-07"
+  ],
+  "sourceEvidence": [
+    {
+      "name": "src-DdvbAHrR.mjs",
+      "sha256": "f4d33527f049feccb3183d749039072deaa21528b6ba85d05e3a5fa68b2060ad"
+    }
+  ],
+  "extension": "io.modelcontextprotocol/skills",
+  "scope": "ESM imports and installed export/engine compatibility only; no endpoint, auth, wire or client E2E test",
+  "optionalLegacyWarning": "server-legacy is deprecated v1 SSE/OAuth migration code; not needed by default for legacy Streamable HTTP profile"
+}
+
+exit=0
