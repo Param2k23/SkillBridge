@@ -45,6 +45,16 @@ jobs:
         run: corepack pnpm test
       - name: Build
         run: corepack pnpm build
+      - name: Pinned MCP SDK import preflight
+        run: |
+          set -euo pipefail
+          sdk_dir="$(mktemp -d "$RUNNER_TEMP/skillbridge-sdk-preflight.XXXXXX")"
+          for asset_name in package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc sdk-import-smoke.mjs; do
+            cp "project/evidence/phase-1-completion/sdk/$asset_name" "$sdk_dir/$asset_name"
+          done
+          corepack pnpm --dir "$sdk_dir" install --frozen-lockfile --ignore-scripts --fetch-retries=0 --fetch-timeout=10000
+          corepack pnpm --dir "$sdk_dir" audit --audit-level=low
+          node "$sdk_dir/sdk-import-smoke.mjs"
       - name: Task graph and negative tests
         run: |
           set -euo pipefail
@@ -58,3 +68,18 @@ jobs:
         run: corepack pnpm audit --audit-level=low
       - name: Reproducible emitted build
         run: python3 .github/scripts/check_reproducible.py
+      - name: Local dependency policy and negative tests
+        run: |
+          set -euo pipefail
+          python3 deploy/local/manage.py check
+          python3 -m unittest discover -s deploy/local -p 'test_*.py' -v
+      - name: Real PostgreSQL and S3 lifecycle
+        run: |
+          set -euo pipefail
+          lifecycle_venv="$(mktemp -d "$RUNNER_TEMP/skillbridge-lifecycle.XXXXXX")"
+          python3 -m venv "$lifecycle_venv"
+          "$lifecycle_venv/bin/python" -m pip --isolated --disable-pip-version-check install --index-url https://pypi.org/simple --only-binary=:all: --timeout 10 --retries 0 -r deploy/local/requirements-validation.txt
+          "$lifecycle_venv/bin/python" deploy/local/verify_lifecycle.py
+      - name: Always stop local test services
+        if: ${{ always() }}
+        run: python3 deploy/local/manage.py down
